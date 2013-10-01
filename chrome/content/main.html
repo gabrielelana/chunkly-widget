@@ -3,24 +3,90 @@
 <head>
     <meta charset="utf-8">
     <style type="text/css">
-        body {
-            position: relative;
-            overflow: hidden;
-        }
-        div {
-            color: white;
-            background: lightgray;
-            border-radius: 150px 0px 0px 150px;
-            position: absolute;
-            top: 0px;
-            left: 490px;
-            width: 500px;
-            height: 300px;
-        }
+
+body {
+  position: relative;
+  overflow: hidden;
+}
+
+.base {
+  position: absolute;
+  color: white;
+  /*background: #BDC2C8;*/
+  background-color: #A1CADA;
+  border-radius: 150px 0px 0px 150px;
+  top: 0px;
+  left: 490px;
+  width: 500px;
+  height: 300px;
+}
+
+.border {
+  position: absolute;
+  box-shadow: 4px 0px 5px #888;
+  border-radius: 300px;
+  /*background-color: #5F98AD;*/
+  background-color: #A1CADA;
+  top: 0px;
+  left: 490px;
+  width: 300px;
+  height: 300px;
+  z-index: 1;
+}
+
+.display {
+  position: relative;
+  background-color: #54606E;
+  box-shadow: inset 4px 0px 5px #394757;
+  border-radius: 200px;
+  left: 50px;
+  top: 50px;
+  width: 200px;
+  height: 200px;
+  z-index: 2;
+}
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100);
+
+.display > div {
+  font-family: 'Roboto', sans-serif;
+}
+
+.display > .clock {
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  width: 200px;
+  line-height: 150px;
+  text-align: center;
+  font-size: 60px;
+  font-stretch: semi-condensed;
+  font-weight: 500;
+  color: white;
+}
+
+.display > .comment {
+  position: absolute;
+  top: 120px;
+  left: 40px;
+  width: 120px;
+  text-align: left;
+  font-size: 10px;
+  color: #BDC2C8;
+}
+
     </style>
 </head>
 <body>
-    <div class="base"></div>
+
+<div class="border"></div>
+<div class="base">
+  <div class="display">
+    <div class="clock">25:00</div>
+    <div class="comment">zzz...</div>
+  </div>
+</div>
+
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script>
         var hidden = true
@@ -53,13 +119,13 @@
         }
 
         function slideIn() {
-            $('div').animate({left: 0}, 100, function() {
+            $('.base, .border').animate({left: 0}, 100, function() {
                 hidden = false
             })
         }
 
         function slideOut() {
-            $('div').animate({left: 490}, 100, function() {
+            $('.base, .border').animate({left: 490}, 100, function() {
                 hidden = true
             })
         }
@@ -68,10 +134,34 @@
             hidden ? slideIn() : slideOut()
         }
 
+        function countDownFor(secondsToGo, comment) {
+            var $clock = $(".clock")
+            $(".comment").text(comment)
+            var minutes = Math.floor(secondsToGo/60),
+                seconds = secondsToGo - (minutes * 60)
+            $clock.text(((minutes < 10) ? '0' : '') + minutes + ":" + ((seconds < 10) ? '0' : '') + seconds)
+            setInterval(function() {
+                secondsToGo -= 1
+                var minutes = Math.floor(secondsToGo/60),
+                    seconds = secondsToGo - (minutes * 60)
+                $clock.text(((minutes < 10) ? '0' : '') + minutes + ":" + ((seconds < 10) ? '0' : '') + seconds)
+            }, 1000)
+        }
+
+        // countDownFor(25*60, "#chunkly>widget show current pomodoro countdown")
+        // slideIn()
+
         commands(function(command) {
             if (command !== "") {
+                var tokens = command.split("\t")
                 dump("COMMAND[" + command + "]\n")
-                if (command === "slide") slide()
+                if (tokens[0] === "slide") {
+                    slide()
+                }
+                if (tokens[0] === "start") {
+                    countDownFor(25*60, tokens[2])
+                    slideIn()
+                }
             }
         })
     </script>
