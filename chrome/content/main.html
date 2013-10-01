@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style type="text/css">
+        body {
+            position: relative;
+            overflow: hidden;
+        }
+        div {
+            color: white;
+            background: lightgray;
+            border-radius: 150px 0px 0px 150px;
+            position: absolute;
+            top: 0px;
+            left: 490px;
+            width: 500px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="base"></div>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script>
+        var hidden = true
+
+        function commands(handle) {
+            Components.utils.import("resource://gre/modules/NetUtil.jsm")
+
+            var buffer = "",
+                commandPipe = Components.classes["@mozilla.org/file/directory_service;1"]
+                    .getService(Components.interfaces.nsIProperties)
+                    .get("Home", Components.interfaces.nsIFile)
+                
+            commandPipe.appendRelativePath(".chunkly/pipes/widget")
+
+            setInterval(function() {
+                NetUtil.asyncFetch(commandPipe, function(inputStream, status) {
+                    if (!Components.isSuccessCode(status)) {
+                        return;
+                    }
+                    buffer = buffer + NetUtil.readInputStreamToString(inputStream, inputStream.available());
+                    var lines = buffer.split("\n")
+                    if (!/^.*\n$/.test(buffer)) {
+                        buffer = lines.pop()
+                    } else {
+                        buffer = ""
+                    }
+                    lines.forEach(handle)
+                })
+            }, 500)
+        }
+
+        function slideIn() {
+            $('div').animate({left: 0}, 100, function() {
+                hidden = false
+            })
+        }
+
+        function slideOut() {
+            $('div').animate({left: 490}, 100, function() {
+                hidden = true
+            })
+        }
+
+        function slide() {
+            hidden ? slideIn() : slideOut()
+        }
+
+        commands(function(command) {
+            if (command !== "") {
+                dump("COMMAND[" + command + "]\n")
+                if (command === "slide") slide()
+            }
+        })
+    </script>
+</body>
+</html>

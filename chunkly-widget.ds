@@ -1,0 +1,10 @@
+(if (is (window_name) "chunkly-widget") 
+  (begin
+    (geometry "+1180+200")
+    (pin)
+    (above)
+    (undecorate)
+    (skip_tasklist)
+    (skip_pager)
+  )
+)

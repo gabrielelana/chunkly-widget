@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<window title="chunkly-widget" width="500" height="300" style="-moz-appearance: none; background: transparent;" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <browser style="-moz-appearance: none; background: transparent;" src="chrome://chunkly-widget/content/main.html" flex="1" />
+</window>
