@@ -1,6 +1,8 @@
 ## What is that?
 It's an OS widget for the [pomodoro technique](http://pomodorotechnique.com/)
 
+![widget ticking](https://github.com/gabrielelana/chunkly-widget/raw/master/.screenshot/ticking.png)
+
 ## Why?
 Basically is an attempt to create a nice, potentially portable, OS widget with HTML5/CSS. I ended up using xulrunner, for now it's more an hack than anything else, but it does what I want and it's really simple to customize and to play with so I'm pretty happy with that :-)
 

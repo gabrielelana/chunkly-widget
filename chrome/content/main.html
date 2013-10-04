@@ -12,12 +12,12 @@ body {
 .base {
   position: absolute;
   color: white;
-  /*background: #BDC2C8;*/
-  background-color: #A1CADA;
+  /*background-color: #A1CADA;*/
+  background-color: #BDC2C8;
   border-radius: 150px 0px 0px 150px;
   top: 0px;
-  left: 490px;
-  width: 500px;
+  left: 340px;
+  width: 350px;
   height: 300px;
 }
 
@@ -26,9 +26,10 @@ body {
   box-shadow: 4px 0px 5px #888;
   border-radius: 300px;
   /*background-color: #5F98AD;*/
-  background-color: #A1CADA;
+  /*background-color: #A1CADA;*/
+  background-color: #BDC2C8;
   top: 0px;
-  left: 490px;
+  left: 340px;
   width: 300px;
   height: 300px;
   z-index: 1;
@@ -54,12 +55,13 @@ body {
 
 .display > .clock {
   position: absolute;
-  top: 10px;
+  top: 8px;
   left: 0px;
   width: 200px;
   line-height: 150px;
   text-align: center;
-  font-size: 60px;
+  text-shadow: 0px 0px 1px #4d4d4d, 0px 2px 2px #aeaeae;
+  font-size: 65px;
   font-stretch: semi-condensed;
   font-weight: 500;
   color: white;
@@ -125,7 +127,7 @@ body {
         }
 
         function slideOut() {
-            $('.base, .border').animate({left: 490}, 100, function() {
+            $('.base, .border').animate({left: 340}, 100, function() {
                 hidden = true
             })
         }
@@ -148,8 +150,8 @@ body {
             }, 1000)
         }
 
-        // countDownFor(25*60, "#chunkly>widget show current pomodoro countdown")
-        // slideIn()
+        countDownFor(25*60, "#chunkly>widget show current pomodoro countdown")
+        slideIn()
 
         commands(function(command) {
             if (command !== "") {

@@ -1,6 +1,6 @@
 (if (is (window_name) "chunkly-widget") 
   (begin
-    (geometry "+1180+200")
+    (geometry "+1330+200")
     (pin)
     (above)
     (undecorate)
